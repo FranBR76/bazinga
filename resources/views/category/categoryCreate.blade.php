@@ -1,0 +1,29 @@
+@extends('layout')
+@section('content')
+@if(session()->has('message'))
+    {{session()->get('message')}}
+@endif
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+<form action="{{route('category.store')}}" method="POST">
+@csrf
+    <legend>Adicionar Categoria</legend>
+    <div class="mb-3">
+        <label for="disableTextInput" class="form-label" >Nome</label>
+        <input type="text" id="disableTextInput" name="name" value="{{ old('name') }}" class="form-control">
+    </div>
+     <div class="mb-3">
+        <label for="disableTextInput" class="form-label" >Descrição</label>
+        <input type="text" id="disableTextInput" name="description" value="{{ old('description') }}" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+   
+    </form>
+    @endsection
