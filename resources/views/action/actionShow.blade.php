@@ -17,12 +17,12 @@
     </div>
      <div class="mb-3">
         <label for="disableTextInput" class="form-label">ID categoria</label>
-        <input type="text" id="disableTextInput" name="category_id" class="form-control" placeholder="{{$action->category_id}}">
+        <input type="text" id="disableTextInput" name="category_id" class="form-control" placeholder="{{$category_id->name}}">
     </div>
      <div class="mb-3">
         <label for="disableTextInput" class="form-label">Pontos</label>
         <input type="text" id="disableTextInput" name="points" class="form-control" placeholder="{{$action->points}}">
-    </div>
+    </div>  
     <button type="submit" class="btn btn-danger">Excluir</button>
    
     </form>

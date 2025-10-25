@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{CategoryController, ActionController};
+use App\Http\Controllers\UserActionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,10 +20,7 @@ Route::delete('category/{id}',[CategoryController::class, 'destroy'])->name('cat
 // O resource serve para fazer automaticamento todas as rotas a cima de uma vez
 Route::resource('category',CategoryController::class);
 Route::resource('action', ActionController::class);
-
-
-
-
+Route::resource('useraction', UserActionsController::class);
 
 
 Route::get('/reward' , [RewardsController::class,'index'])->name('reward.index');

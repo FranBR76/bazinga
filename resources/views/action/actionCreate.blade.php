@@ -24,10 +24,13 @@
         <label for="disableTextInput" class="form-label">Descrição</label>
         <input type="text" id="disableTextInput" name="description"  value="{{ old('description') }}" class="form-control">
     </div>
-    <div class="mb-3">
-        <label for="disableTextInput" class="form-label">ID de Categoria</label>
-        <input type="text" id="disableTextInput" name="category_id" value="{{ old('category_id') }}" class="form-control">
-    </div>
+    <label for="categoria">Escolha uma Categoria:</label>
+        <select class="form-select" aria-label="Default select example" name="category_id">
+          <option value="">--Selecione--</option>
+          @foreach($categories as $cat)
+            <option value="{{$cat->id}}">{{$cat->name}}</option>
+          @endforeach
+        </select>
     <div class="mb-3">
         <label for="disableTextInput" class="form-label">Pontos</label>
         <input type="text" id="disableTextInput" name="points" value="{{ old('points') }}" class="form-control">

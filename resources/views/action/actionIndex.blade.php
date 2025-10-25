@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-<table class="table table-dark table-striped">
+<table class="table table-dark table-striped" >
    <thead>
     <tr>
       <th scope="col">id</th>

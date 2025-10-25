@@ -22,7 +22,14 @@ class ActionController extends Controller
      */
     public function create()
     {
-        return view('action/actionCreate');
+        $categories = Categories::all();
+        if (empty($categories)){
+          
+            return redirect()->back()->with('message', 'Erro na insercao');
+
+        }
+        //dd($categories);
+        return view('action/actionCreate', compact('categories'));
     }
 
     /**
@@ -30,42 +37,33 @@ class ActionController extends Controller
      */
     public function store(Request $request)
     {   
-        // dd($request->all());
-         $validate = Validator::make(
-            $request->all(),[
-                'title'=> 'required|max:30|min:3',
-                'description'=> 'required|min:7',
-                'category_id'=> 'required|numeric',
-                'points'=> 'required|numeric'
+         //dd($request->except(['_token']));
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|max:30|min:3',
+                'description' => 'required|min:7',
+                'points' => 'required|numeric'
             ],
             [
-                'title.required'=>'O title deve ser preenchido',
-                'title.max'=>'Titulo: O tamanho máximo é de 30 caracteres',
-                'title.min'=>'Titulo: O tamanho mínimo de caracteres é 3',
-                'description.required'=>'A descrição deve ser preenchida',
-                'description.min'=>'Descrição: O tamanho mínimo é de 7 caracteres',
-                'category_id.required'=>'O id precisa ser preenchido',
-                'category_id.numeric'=>'ID: O id da categoria precisa ser numero',
-                'points.required'=>'Os pontos precisam ser preenchidos',
-                'points.numeric'=>'Os pontos precisam ser número'
+                'title.required' => 'O nome deve ser preenchido',
+                'title.max' => 'O tamanho máximo é 30 caracteres',
+                'title.min' => 'O tamanho mínimo é 3 caracteres',
+                'description.required' => 'A descrição deve ser preenchida',
+                'description.min' => 'A descrição deve ter no mínimo 7 caracteres',
+                'points.numeric'=>'A pontuação deve ser um número'
             ]
         );
         if ($validate->fails()) {
-            return redirect()->back()->withErrors($validate)->withInput();
-        }
-        else {
-        
-            
-            //dd($request);
-            $create = Actions::create([
-                'title'=>$request->input('title'),
-                'description'=>$request->input('description'),
-                'category_id'=>$request->input('category_id'),
-                'points'=>$request->input('points')
-            ]);
-            if($create){
+            return redirect()->back()
+                ->withErrors($validate)
+                ->withInput();
+        } else {
+           
+            $create = Actions::create($request->except(['_token']));
+            if ($create) {
                 return redirect()->route('action.index');
-            }else {
+            } else {
                 return redirect()->back()->with('message', 'Erro na insercao');
             }
         }
@@ -78,7 +76,10 @@ class ActionController extends Controller
     {
          $action = Actions::findOrFail($id);
         //dd($action);
-        return view('action/actionShow', compact('action'));
+        // $categories = Categories::all();
+        $category_id = Categories::findOrFail($action->category_id);
+        
+        return view('action/actionShow', compact('action', 'category_id'));
     }
 
     /**
@@ -86,9 +87,11 @@ class ActionController extends Controller
      */
     public function edit(string $id)
     {
-        $action = Actions::findOrFail($id);
-        //dd($action);
-        return view('action/actionEdit', compact('action'));
+       $action = Actions::findOrFail($id);
+        $categories = Categories::all();
+        $category_id = Categories::findOrFail($action->category_id);
+      
+        return view("action/actionEdit", compact('action','categories','category_id'));
     }
 
     /**
