@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserActions;
+use App\Models\{UserActions, User};
 use Illuminate\Http\Request;
 
 class UserActionsController extends Controller
@@ -14,7 +14,7 @@ class UserActionsController extends Controller
     {
         $userActions = UserActions::with(['user', 'action.categories'])->get();
         // dd($userActions[0]->user->name);
-        return view('userAction/userActionIndex', 'userActions'); 
+        return view('userAction/userActionIndex', compact('userActions')); 
     }
 
     /**
@@ -22,7 +22,9 @@ class UserActionsController extends Controller
      */
     public function create()
     {
-        //
+        $user=User::all;
+        $actions=Actions::all;
+        return view('userAction/userActionCreate', compact('user',  'actions'));
     }
 
     /**
