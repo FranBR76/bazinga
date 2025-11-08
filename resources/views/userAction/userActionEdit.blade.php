@@ -3,19 +3,10 @@
 @if(session()->has('message'))
     {{session()->get('message')}}
 @endif
-@if($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-<form action="{{route('useraction.store')}}" method="POST">
+<form action="{{route('useraction.update', $usreaction->id)}}" method="POST">
 @csrf
-
-    <legend>Adicionar Action</legend>
+@method('PUT')
+ <legend>Editar Ação do usuario</legend>
     <label for="categoria">Escolha um usuario:</label>
         <select class="form-select" aria-label="Default select example" name="user">
           <option value="">--Selecione--</option>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{UserActions, User};
+use App\Models\{UserActions, User, Actions};
 use Illuminate\Http\Request;
 
 class UserActionsController extends Controller
@@ -22,9 +22,9 @@ class UserActionsController extends Controller
      */
     public function create()
     {
-        $user=User::all;
-        $actions=Actions::all;
-        return view('userAction/userActionCreate', compact('user',  'actions'));
+        $user=User::all();
+        $actions=Actions::all();
+        return view('userAction/userActionCreate', compact('user', 'actions'));
     }
 
     /**
@@ -32,23 +32,43 @@ class UserActionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $request->validate([
+            'user'=>'required',
+            'actions'=>'required',
+            'quantity'=>'required|integer|min:1',
+            'date'=> 'date'
+        ]);
+        
+        UserActions::create([
+            'user_id'=>$request->user,
+            'action_id'=>$request->actions,
+            'quantity'=>$request->quantity,
+            'date'=>$request->date
+        ]);
+        return redirect()->route('useraction.index')->with('success', 'Ação do usuario registrada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserActions $userActions)
+    public function show(UserActions $id)
     {
-        //
+        
+        $userActions = UserActions::findOrFail($id);
+        //dd($category);
+        return view('userAction/userActionShow', compact('useraction'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserActions $userActions)
+    public function edit(UserActions $id)
     {
-        //
+        $userActions = UserActions::findOrFail($id);
+     
+        //dd($category);
+        return view('userAction/userActionEdit', compact('useraction'));
     }
 
     /**
