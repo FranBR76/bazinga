@@ -87,8 +87,13 @@ class UserActionsController extends Controller
             'date' => 'required|date'
         ]);
         $useractions = UserActions::findOrFail($id);
-        dd($request);
-        $userAction = update($request->all());
+        // dd($request);
+        $useractions->update($request->except(['_token', '_method']));
+        return redirect()->route('useraction.index');
+
+
+     
+
     }
 
     /**

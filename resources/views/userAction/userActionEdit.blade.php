@@ -12,19 +12,20 @@
     </ul>
 </div>
 @endif
-<form action="{{route('useraction.update')}}" method="POST">
+<form action="{{ route('useraction.update', $useractions->id)}}" method="POST">
 @csrf
 @method('PUT')
+
     <legend>Adicionar Action</legend>
     <label for="user">Escolha um usuario:</label>
-        <select class="form-select" aria-label="Default select example" name="user">
+        <select class="form-select" aria-label="Default select example" name="user_id">
           <option value="{{ $user->id }}">{{ $user->name }}</option>
           @foreach($users as $u)
             <option value="{{$u->id}}">{{$u->name}}</option>
           @endforeach
         </select>
     <label for="action">Escolha uma ação :</label>
-        <select class="form-select" aria-label="Default select example" name="actions">
+        <select class="form-select" aria-label="Default select example" name="action_id">
           <option value="{{ $action->id }}">{{ $action->title }}</option>
           @foreach($actions as $a)
             <option value="{{$a->id}}">{{$a->title}}</option>
