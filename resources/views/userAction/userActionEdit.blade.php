@@ -3,20 +3,29 @@
 @if(session()->has('message'))
     {{session()->get('message')}}
 @endif
-<form action="{{route('useraction.update', $usreaction->id)}}" method="POST">
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+<form action="{{route('useraction.update')}}" method="POST">
 @csrf
 @method('PUT')
- <legend>Editar Ação do usuario</legend>
-    <label for="categoria">Escolha um usuario:</label>
+    <legend>Adicionar Action</legend>
+    <label for="user">Escolha um usuario:</label>
         <select class="form-select" aria-label="Default select example" name="user">
-          <option value="">--Selecione--</option>
-          @foreach($user as $u)
+          <option value="{{ $user->id }}">{{ $user->name }}</option>
+          @foreach($users as $u)
             <option value="{{$u->id}}">{{$u->name}}</option>
           @endforeach
         </select>
-    <label for="categoria">Escolha um :</label>
+    <label for="action">Escolha uma ação :</label>
         <select class="form-select" aria-label="Default select example" name="actions">
-          <option value="">--Selecione--</option>
+          <option value="{{ $action->id }}">{{ $action->title }}</option>
           @foreach($actions as $a)
             <option value="{{$a->id}}">{{$a->title}}</option>
           @endforeach
@@ -24,11 +33,11 @@
 
     <div class="mb-3">
         <label for="disableTextInput" class="form-label">Quantidade</label>
-        <input type="text" id="disableTextInput" name="quantity" value="{{ old('quantity') }}" class="form-control">
+        <input type="text" id="disableTextInput" name="quantity" value="{{$useractions->quantity}}" class="form-control">
     </div>
     <div class="mb-3">
         <label for="disableTextInput" class="form-label">Data</label>
-        <input type="date" id="disableTextInput" name="date" value="{{ old('date') }}" class="form-control">
+        <input type="date" id="disableTextInput" name="date" value="{{$useractions->date}}" class="form-control">
     </div>
     <button type="submit" class="btn btn-primary">Salvar</button>
    

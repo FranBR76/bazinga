@@ -63,20 +63,32 @@ class UserActionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserActions $id)
+    public function edit($id)
     {
-        $userActions = UserActions::findOrFail($id);
-     
+        $useractions = UserActions::findOrFail($id);
+        // dd($useractions);
+        $user = User::findOrFail($useractions->user_id);
+        $users = User::all();
+        $action = Actions::findOrFail($useractions->action_id);
+        $actions = Actions::all();
         //dd($category);
-        return view('userAction/userActionEdit', compact('useraction'));
+        return view('userAction/userActionEdit', compact('useractions', 'user', 'users', 'action', 'actions') );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserActions $userActions)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'user_id' => 'required',
+            'action_id'=> 'required',
+            'quantity' => 'required|integer|min:1',
+            'date' => 'required|date'
+        ]);
+        $useractions = UserActions::findOrFail($id);
+        dd($request);
+        $userAction = update($request->all());
     }
 
     /**
