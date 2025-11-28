@@ -64,9 +64,7 @@ class RewardController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         $reward = Reward::findOrFail($id);
@@ -84,9 +82,7 @@ class RewardController extends Controller
         return view('reward/rewardEdit', compact('reward'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
     {
         $validate = Validator::make(

@@ -11,7 +11,7 @@
     <style>
         :root {
             --sidebar-width: 280px;
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-gradient: linear-gradient(135deg, #9cabeeff 0%, #963feeff 100%);
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
@@ -178,7 +178,7 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h4><i class="bi bi-tree me-2"></i>Eco Bazinga</h4>
+            <h4>Eco Bazinga</h4>
         </div>
         
         <div class="p-3">

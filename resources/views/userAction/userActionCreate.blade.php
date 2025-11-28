@@ -24,15 +24,15 @@
 @csrf
 
     <legend>Adicionar Action</legend>
-    <label for="categoria">Escolha um usuario:</label>
+    <label for="user">Escolha um usuario:</label>
         <select class="form-select" aria-label="Default select example" name="user">
           <option value="">--Selecione--</option>
           @foreach($user as $u)
             <option value="{{$u->id}}">{{$u->name}}</option>
           @endforeach
         </select>
-    <label for="categoria">Escolha um :</label>
-        <select class="form-select" aria-label="Default select example" name="actions">
+    <label for="action">Escolha uma acao :</label>
+        <select class="form-select" aria-label="Default select example" name="action">
           <option value="">--Selecione--</option>
           @foreach($actions as $a)
             <option value="{{$a->id}}">{{$a->title}}</option>

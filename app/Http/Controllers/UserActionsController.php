@@ -55,13 +55,13 @@ class UserActionsController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        $userActions = UserActions::findOrFail($id);
+{
+    
+    $userAction = UserActions::findOrFail($id); 
 
-        $action_id = Actions::findOrFail($userActions->action_id);
-        $user_id = User::findOrFail($userActions->user_id);
-        return view('userAction/userActionShow', compact('userActions', 'action_id', 'user_id'));
-    }
+    
+    return view('userAction/userActionShow', compact('userAction'));
+}
 
     /**
      * Show the form for editing the specified resource.
