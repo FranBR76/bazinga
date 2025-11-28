@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
- 
+
     /**
      * Display a listing of the resource.
      */
@@ -16,8 +17,8 @@ class CategoryController extends Controller
         //$category = new Categories;
         //$category->all();
         $categories = Categories::all();
-
-        return view('category/categoryIndex',compact('categories'));
+        //dd($categories);
+        return view('category/categoryIndex', compact('categories'));
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-       return view('category/categoryCreate');
+        return view('category/categoryCreate');
     }
 
     /**
@@ -34,37 +35,44 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make(
-            $request->all(),[
-                'name'=> 'required|max:30|min:3',
-                'description'=> 'required|min:7'
+            $request->all(),
+            [
+                'name' => 'required|max:30|min:3',
+                'description' => 'required|min:7',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
             ],
             [
-                'name.required'=>'O nome deve ser preenchido',
-                'name.max'=>'Nome: O tamanho máximo é de 30 caracteres',
-                'name.min'=>'Nome: O tamanho mínimo de caracteres é 3',
-                'description.required'=>'A descrição deve ser preenchida',
-                'description.min'=>'Descrição: O tamanho mínimo é de 7 caracteres'
+                'name.required' => 'O nome deve ser preenchido',
+                'name.max' => 'O tamanho máximo é 30 caracteres',
+                'name.min' => 'O tamanho mínimo é 3 caracteres',
+                'description.required' => 'A descrição deve ser preenchida',
+                'description.min' => 'A descrição deve ter no mínimo 7 caracteres '
             ]
         );
         if ($validate->fails()) {
-            return redirect()->back()->withErrors($validate)->withInput();
-        }
-        else {
-        
-            
-            //dd($request);
+            return redirect()->back()
+                ->withErrors($validate)
+                ->withInput();
+        } else {
+            if ($request->hasFile('image')) {
+               $path = $request->file('image')->store('categories', 'public');  
+            }else{
+                $path='NA';
+            }
+
             $create = Categories::create([
-                'name'=>$request->input('name'),
-                'description'=>$request->input('description')
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'image'=>$path
             ]);
-            if($create){
+            if ($create) {
                 return redirect()->route('category.index');
-            }else {
+            } else {
                 return redirect()->back()->with('message', 'Erro na insercao');
             }
         }
     }
-        
+
     /**
      * Display the specified resource.
      */
@@ -92,15 +100,24 @@ class CategoryController extends Controller
     {
         //dd($request);
         //outra maneira de quebrar o request para salvar
-        $category=Categories::findOrFail($id);
-        $update = $category->update($request->except(['_token','_method']));
-        if($update){
-            return redirect()->route('category.index');
-        }else {
-            return redirect()->back()->with('message', 'Erro na atualizacao');
-
+      
+        $path=null;
+        if ($request->hasFile('image')) {
+               $path = $request->file('image')->store('categories', 'public');  
         }
-
+        $category = Categories::findOrFail($id);
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        if(isset($path)){
+            $category->image=$path;
+        }
+        $category->save();
+       
+        if ($category->wasChanged()) {
+            return redirect()->route('category.index');
+        } else {
+            return redirect()->back()->with('message', 'Erro na atualizacao');
+        }
     }
 
     /**
@@ -112,4 +129,4 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('category.index');
     }
-}
+}   

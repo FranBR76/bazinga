@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{CategoryController, ActionController};
+use App\Http\Controllers\{CategoryController, ActionController, RewardController};
 use App\Http\Controllers\UserActionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +21,7 @@ Route::delete('category/{id}',[CategoryController::class, 'destroy'])->name('cat
 Route::resource('category',CategoryController::class);
 Route::resource('action', ActionController::class);
 Route::resource('useraction', UserActionsController::class);
+Route::resource('reward', RewardController::class);
 
 
-Route::get('/reward' , [RewardsController::class,'index'])->name('reward.index');
+// Route::get('/reward' , [RewardsController::class,'index'])->name('reward.index');

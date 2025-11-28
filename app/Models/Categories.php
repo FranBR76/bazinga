@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
-    use HasFactory;
-    protected $fillable = [
-        'name',
-        'description'
-    ];
-    public function actions()
-    {
-        return $this->hasTo(Actions::class);
-    }
+  use HasFactory;
+  protected $fillable=[
+    'name',
+    'description',
+    'image'
+   ];
+   public function actions(){
+     return $this->hasTo(Actions::class);
+   }
 }
-

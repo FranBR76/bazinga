@@ -1,7 +1,20 @@
 @extends('layout')
 @section('content')
+
+ <div class="p-4 mb-3 bg-body-tertiary rounded">
+    <h4 class="fst-italic">Ações de Usuario</h4>
+    <p class="mb-0">Crie as ações vinculadas por usuario.</p>
+  </div>
+  <div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{{route('useraction.index')}}" class="nav-link active" class="nav-link">Ações de usuario</a></li>
+        <li class="nav-item"><a href="{{route('useraction.create')}}" class="nav-link">Criar ações de usuario</a></li>
+      </ul>
+    </header>
+  </div>
 <table class="table table-dark table-striped" >
-   <thead>
+   <thead class="table-secondary">
     <tr>
       <th scope="col">id</th>
       <th scope="col">Usuario</th>

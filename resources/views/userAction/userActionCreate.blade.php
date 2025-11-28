@@ -12,6 +12,14 @@
     </ul>
 </div>
 @endif
+<div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{{route('useraction.index')}}" class="nav-link " class="nav-link">Ações de usuario</a></li>
+        <li class="nav-item"><a href="{{route('useraction.create')}}" class="nav-link active">Criar ações de usuario</a></li>
+      </ul>
+    </header>
+  </div>
 <form action="{{route('useraction.store')}}" method="POST">
 @csrf
 
